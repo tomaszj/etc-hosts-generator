@@ -13,4 +13,10 @@
 <% end %>
 </table>
 
-<a href="/nodes/new">Add a new node</a>
+<p>
+  <h3>Actions</h3>
+  <a href="/nodes/new">Add a new node</a>
+  <form action="/nodes" method="post">
+  <input type="hidden" name="_method" value="delete" />
+  <input type="submit" value="Delete all">
+</p>

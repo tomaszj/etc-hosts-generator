@@ -65,6 +65,11 @@ put '/nodes/:id' do |id|
   end
 end
 
+delete '/nodes' do
+  HadoopNode.destroy!
+  redirect '/nodes'
+end
+
 delete '/nodes/:id' do |id|
   node = HadoopNode.get!(id)
   node.destroy!
