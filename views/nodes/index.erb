@@ -1,7 +1,16 @@
 <h2>Nodes</h2>
 
+<table>
+  <thead>
+    <th>Hostname</th>
+    <th>IP</th>
+  </thead>
 <% @nodes.each do |node| %>
-  <h3><a href="/nodes/<%= node.id %>"> Host:<%= node.host_name %> IP:<%= node.ip %></a></h2>
+  <tr>
+    <td><a href="/nodes/<%= node.id %>"><%= node.host_name %></a></td>
+    <td>IP:<%= node.ip %></a></h2></td>
+  </tr>
 <% end %>
+</table>
 
 <a href="/nodes/new">Add a new node</a>

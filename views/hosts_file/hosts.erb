@@ -2,4 +2,8 @@
 # Use it at your own risk
 # Manual editing is discouraged, unless you really know what you're doing.
 
-127.0.0.1   localhost loopback
+127.0.0.1   localhost   loopback
+
+<% @nodes.each do |node| %>
+<%= "#{node.ip}\t#{node.host_name}\t#{node.host_name}\r\n" %>
+<% end %>

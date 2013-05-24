@@ -19,6 +19,8 @@ get '/' do
 end
 
 get '/hosts' do
+  @nodes = HadoopNode.all
+
   content_type 'text/plain'
   erb :'hosts_file/hosts', :format => :text, :layout => false
 end
