@@ -1,0 +1,7 @@
+<h2>Nodes</h2>
+
+<% @nodes.each do |node| %>
+  <h3><a href="/nodes/<%= node.id %>"> Host:<%= node.host_name %> IP:<%= node.ip %></a></h2>
+<% end %>
+
+<a href="/nodes/new">Add a new node</a>

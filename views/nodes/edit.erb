@@ -1,0 +1,6 @@
+<form action="/nodes/<%= @node.id %>" method="post" accept-charset="utf-8">
+	<input name="_method" type="hidden" value="put" />
+	<p>Title: <input type="text" name="node[title]" value="<%= @node.title %>" id="node[title]" /></p>
+	<p>Content: <textarea name="node[content]" rows="3" cols="40"><%= @node.content %></textarea></p>
+	<p><input type="submit" value="Update node" /></p>
+</form>

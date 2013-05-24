@@ -4,62 +4,67 @@ require 'data_mapper'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/dev.db")
 
-class Article
+class HadoopNode
   include DataMapper::Resource
 
   property :id, Serial
-  property :title, String
-  property :content, Text
+  property :host_name, String
+  property :ip, String
 end
 
 DataMapper.finalize.auto_upgrade!
 
 get '/' do
-  erb :index
+  redirect '/nodes'
 end
 
-get '/articles' do
-  @articles = Article.all
-  erb :'articles/index'
+get '/hosts' do
+  content_type 'text/plain'
+  erb :'hosts_file/hosts', :format => :text, :layout => false
 end
 
-get '/articles/new' do
-  erb :'articles/new'
+get '/nodes' do
+  @nodes = HadoopNode.all
+  erb :'nodes/index'
 end
 
-get '/articles/:id' do |id|
-  @article = Article.get!(id)
-  erb :'articles/show'
+get '/nodes/new' do
+  erb :'nodes/new'
 end
 
-get '/articles/:id/edit' do |id|
-  @article = Article.get!(id)
-  erb :'articles/edit'
+get '/nodes/:id' do |id|
+  @node = HadoopNode.get!(id)
+  erb :'nodes/show'
 end
 
-post '/articles' do
-  article = Article.new(params[:article])
+get '/nodes/:id/edit' do |id|
+  @node = HadoopNode.get!(id)
+  erb :'nodes/edit'
+end
+
+post '/nodes' do
+  node = HadoopNode.new(params[:node])
   
-  if article.save
-    redirect '/articles'
+  if node.save
+    redirect '/nodes'
   else
-    redirect '/articles/new'
+    redirect '/nodes/new'
   end
 end
 
-put '/articles/:id' do |id|
-  article = Article.get!(id)
-  success = article.update!(params[:article])
+put '/nodes/:id' do |id|
+  node = HadoopNode.get!(id)
+  success = node.update!(params[:node])
   
   if success
-    redirect "/articles/#{id}"
+    redirect "/nodes/#{id}"
   else
-    redirect "/articles/#{id}/edit"
+    redirect "/nodes/#{id}/edit"
   end
 end
 
-delete '/articles/:id' do |id|
-  article = Article.get!(id)
-  article.destroy!
-  redirect "/articles"
+delete '/nodes/:id' do |id|
+  node = HadoopNode.get!(id)
+  node.destroy!
+  redirect "/nodes"
 end

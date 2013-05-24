@@ -1,0 +1,8 @@
+<h2>Node <%= @node.id %>: <%= @node.host_name %> @ <%= @node.ip %></h2>
+
+<a href="/nodes">Back</a> | <a href="/nodes/<%= @node.id %>/edit">Edit</a>
+
+<form action="/nodes/<%= @node.id %>" method="post">
+<input type="hidden" name="_method" value="delete" />
+<input type="submit" value="Delete">
+</form>
