@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra'
+require 'json'
 require 'data_mapper'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/dev.db")
@@ -10,6 +11,9 @@ class HadoopNode
   property :id, Serial
   property :host_name, String
   property :ip, String
+
+  validates_presence_of :host_name
+  validates_presence_of :ip
 end
 
 DataMapper.finalize.auto_upgrade!
@@ -46,12 +50,20 @@ end
 
 post '/nodes' do
   node = HadoopNode.new(params[:node])
-  
+
   if node.save
     redirect '/nodes'
   else
     redirect '/nodes/new'
   end
+end
+
+post '/nodes.json' do
+  request_body = request.body.read
+  p "Request: #{request_body}"
+  node = HadoopNode.new(JSON.parse(request_body)["node"])
+  node.save
+  node.to_json
 end
 
 put '/nodes/:id' do |id|
